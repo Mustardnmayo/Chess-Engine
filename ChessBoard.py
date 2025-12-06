@@ -1,9 +1,17 @@
+import enum
+
 ############################################################
 class ChessPeice(object):
+    class Team(enum):
+        WHITE = "WHITE"
+        BLACK = "BLACK"
+
     def __init__(self,row:int,col:int):
         self.row:int = row
         self.col:int = col
         
+        self.color:ChessPeice.Team = None
+
         self.moveset:function = None 
 
     def __str__(self):
