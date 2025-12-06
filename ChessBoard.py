@@ -1,77 +1,89 @@
-import enum
+from enum import Enum 
 
 ############################################################
-class ChessPeice(object):
-    class Team(enum):
-        WHITE = "WHITE"
-        BLACK = "BLACK"
-
-    def __init__(self,row:int,col:int):
+class BoardSqaure(object):
+    def __init__(self,row:int, col:int):
         self.row:int = row
         self.col:int = col
         
-        self.color:ChessPeice.Team = None
+        self.peice:ChessPeice = ChessPeice(row,col)
+
+    def __str__(self):
+        return f"{self.peice.team.value}-{self.peice}"
+
+############################################################
+class ChessPeice(object):
+    class Team(Enum):
+        WHITE = "WHITE"
+        BLACK = "BLACK"
+        UNASSIGNED = "UNASSIGNED"
+    #-----------------------------
+    def __init__(self,row:int, col:int, team:ChessPeice.Team=Team.UNASSIGNED):
+        self.row:int = row
+        self.col:int = col
+        
+        self.team:ChessPeice.Team = team
 
         self.moveset:function = None 
 
     def __str__(self):
         return f"{self.__class__.__name__}({self.row},{self.col})"
     
-    def getValidMoveset(self) -> list[list[bool]]: #can be boolean map, can be an arr of indexes # ->list[tuple[int,int]], what ever is needed
+    def getValidMoveset(self) -> list[tuple[int,int]]:
         return self.moveset(self.row,self.col)
 #-----------------------------
 class Pawn(ChessPeice):
-    def __init__(self, row, col):
-        super().__init__(row, col)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.moveset:function = None
 
-    def getValidMoveset(self) -> list[any]: #annotation is currently temporary
+    def getValidMoveset(self):
         return super().getValidMoveset()
 #-----------------------------
 class Knight(ChessPeice):
-    def __init__(self, row, col):
-        super().__init__(row, col)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.moveset:function = None
 
-    def getValidMoveset(self) -> list[any]: #annotation is currently temporary
+    def getValidMoveset(self):
         return super().getValidMoveset()
 #-----------------------------
 class Bishop(ChessPeice):
-    def __init__(self, row, col):
-        super().__init__(row, col)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.moveset:function = None
 
-    def getValidMoveset(self) -> list[any]: #annotation is currently temporary
+    def getValidMoveset(self):
         return super().getValidMoveset()
 #-----------------------------
 class Rook(ChessPeice):
-    def __init__(self, row, col):
-        super().__init__(row, col)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.moveset:function = None
 
-    def getValidMoveset(self) -> list[any]: #annotation is currently temporary
+    def getValidMoveset(self):
         return super().getValidMoveset()
 #-----------------------------
 class Queen(ChessPeice):
-    def __init__(self, row, col):
-        super().__init__(row, col)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.moveset:function = None
 
-    def getValidMoveset(self) -> list[any]: #annotation is currently temporary
+    def getValidMoveset(self):
         return super().getValidMoveset()
 #-----------------------------
 class King(ChessPeice):
-    def __init__(self, row, col):
-        super().__init__(row, col)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.moveset:function = None
 
-    def getValidMoveset(self) -> list[any]: #annotation is currently temporary
+    def getValidMoveset(self):
         return super().getValidMoveset()
 ############################################################
 class Board(object):
@@ -97,7 +109,7 @@ class Board(object):
     def place_peices_on_board(self,):
         for row in self.places:
             for i , j in row:
-                self.places[i][j] = ChessPeice(i,j) #make this a proper function in implementation
+                self.places[i][j] = BoardSqaure(i, j) #make this a proper function in implementation
 
 ############################################################
 
