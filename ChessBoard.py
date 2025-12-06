@@ -6,10 +6,16 @@ class BoardSqaure(object):
         self.row:int = row
         self.col:int = col
         
-        self.peice:ChessPeice = ChessPeice(row,col)
+        self.peice:ChessPeice = None
+
+    def setPeice(self,peice:ChessPeice):
+        self.peice = peice
 
     def __str__(self):
-        return f"{self.peice.team.value}-{self.peice}"
+        if (self.peice is not None):
+            return f"{self.peice.team.value}-{self.peice}"
+        else:
+            return f"{"EMPTY SQUARE":^{30}}" #spacing
 
 ############################################################
 class ChessPeice(object):
@@ -88,8 +94,9 @@ class King(ChessPeice):
 ############################################################
 class Board(object):
     board_size:int = 8
+    #-----------------------------
     def __init__(self):
-        self.places = [ [(i,j) for j in range(Board.board_size)] for i in range(Board.board_size)]
+        self.places = [ [BoardSqaure(i,j) for j in range(Board.board_size)] for i in range(Board.board_size)]
 
         self.place_peices_on_board()
 
@@ -101,15 +108,15 @@ class Board(object):
 
         for row in board:
             for peice in row:
-                ret += f" {peice} "
-            ret += '\n'
+                ret += f"|{str(peice):^{30}}"
+            ret += f"\n"
 
         return ret
 
     def place_peices_on_board(self,):
-        for row in self.places:
-            for i , j in row:
-                self.places[i][j] = BoardSqaure(i, j) #make this a proper function in implementation
+        for row in self.places[0:2] + self.places[-2:]:
+            for square in row:
+                square.setPeice(ChessPeice(square.row,square.col))
 
 ############################################################
 
